@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from '../../assets/Image/logo.png'
+import logo from "../../assets/Image/logo.png";
 
 const navItems = [
   { id: 1, name: "Home", path: "/" },
@@ -17,10 +17,10 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/30 backdrop-blur-lg shadow-md z-50">
-      <div className="container mx-auto flex justify-between items-center p-3 lg:px-16">
+      <div className="container mx-auto flex justify-between items-center p-4 lg:px-16">
         {/* Logo Section */}
         <div className="flex items-center text-xl font-bold">
-            <img className="w-8" src={logo} alt="" />
+          <img className="w-8" src={logo} alt="" />
           <span className="text-primary font-serif">EOM</span>
         </div>
 
@@ -30,7 +30,9 @@ export default function Navbar() {
             <Link
               key={item.id}
               to={item.path}
-              className={`hover:text-primary transition ${location.pathname === item.path ? 'text-primary font-bold' : ''}`}
+              className={`hover:text-primary transition ${
+                location.pathname === item.path ? "text-primary font-bold" : ""
+              }`}
             >
               {item.name}
             </Link>
@@ -39,7 +41,9 @@ export default function Navbar() {
 
         {/* Login Button */}
         <div className="hidden md:block">
-          <button className="bg-primary text-white px-4 py-1 rounded-md">Login</button>
+          <button className="bg-primary text-white px-4 py-1 rounded-md">
+            Login
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -57,13 +61,17 @@ export default function Navbar() {
             <Link
               key={item.id}
               to={item.path}
-              className={`text-lg hover:text-primary transition ${location.pathname === item.path ? 'text-primary font-bold' : ''}`}
+              className={`text-lg hover:text-primary transition ${
+                location.pathname === item.path ? "text-primary font-bold" : ""
+              }`}
               onClick={() => setIsOpen(false)}
             >
               {item.name}
             </Link>
           ))}
-          <button className="bg-primary text-white px-4 py-1 rounded-md">Login</button>
+          <button className="bg-primary text-white px-4 py-1 rounded-md">
+            Login
+          </button>
         </div>
       )}
     </nav>
