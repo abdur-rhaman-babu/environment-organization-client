@@ -8,7 +8,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
   
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex items-center justify-center min-h-screen px-3">
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
           <h2 className="text-2xl font-bold text-center text-gray-700">Login</h2>
           
@@ -40,7 +40,7 @@ const Login = () => {
             
             <button 
               type="submit" 
-              className="w-full bg-primary text-white py-2 rounded-lg hover:bg-green-700 transition"
+              className="w-full bg-primary text-white py-2 rounded-lg hover:bg-hover transition"
             >
               Login
             </button>

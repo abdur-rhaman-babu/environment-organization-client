@@ -8,6 +8,8 @@ export default {
     extend: {
       colors:{
         primary: '#89be38',
+        text: '#374151',
+        hover: '#6fac14'
       },
       container:{
         padding: '4rem'
