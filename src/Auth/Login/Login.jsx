@@ -1,20 +1,41 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
+  const { setUser, signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate()
+  const handleLogin = (e) => {
+    e.preventDefault()
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    signIn(email, password)
+      .then((result) => {
+        setUser(result.user);
+        toast.success("SignIn Successfull");
+        navigate('/')
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen px-3">
       <div className="bg-white p-8 rounded-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-gray-700">Login</h2>
 
-        <form className="mt-6">
+        <form onSubmit={handleLogin} className="mt-6">
           <div className="mb-4">
             <label className="block text-gray-700">Email</label>
             <input
+              name="email"
               type="email"
               placeholder="Enter your email"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
@@ -24,6 +45,7 @@ const Login = () => {
           <div className="mb-4 relative">
             <label className="block text-gray-700">Password</label>
             <input
+              name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
@@ -47,10 +69,11 @@ const Login = () => {
 
         <div className="mt-4 text-center">
           <p className="text-gray-600">Or login with</p>
-          <button className="mt-2 w-full flex items-center justify-center gap-5 border py-2 rounded-lg hover:bg-gray-200 transition">
+          {/* <button className="mt-2 w-full flex items-center justify-center gap-5 border py-2 rounded-lg hover:bg-gray-200 transition">
             <FaGoogle />
             <p>Continue with Google</p>
-          </button>
+          </button> */}
+          <SocialLogin/>
         </div>
 
         <p className="mt-4 text-center text-gray-600">

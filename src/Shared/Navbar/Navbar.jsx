@@ -69,6 +69,7 @@ export default function Navbar() {
           {user?.email ? (
             <div className="relative">
               <img
+                referrerPolicy="no-referrer"
                 className="w-8 h-8 rounded-full cursor-pointer"
                 src={user?.photoURL}
                 alt=""
@@ -127,6 +128,7 @@ export default function Navbar() {
             {user?.email ? (
               <div className="flex flex-col gap-2 justify-center items-center">
                 <img
+                  referrerPolicy="no-referrer"
                   className="w-16 h-16 rounded-lg cursor-pointer"
                   src={user?.photoURL}
                   alt=""
