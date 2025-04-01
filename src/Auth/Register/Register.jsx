@@ -1,22 +1,66 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
+import { uploadImage } from "../../api/utils";
+import toast from "react-hot-toast";
+import useAuth from './../../Hooks/useAuth';
+
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState("donor");
+  const {createUser, updateUserProfile } = useAuth()
+  const navigate = useNavigate()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const role = form.role.value;
+    const password = form.password.value;
+    const image = form.image.files[0];
+
+    const image_url = await uploadImage(image)
+
+    const formData = {
+      name,
+      email,
+      role,
+      password,
+      image_url
+    };
+    console.log(formData)
+    try {
+      //2. User Registration
+      const result = await createUser(email, password);
+
+      //3. Save username & profile photo
+      await updateUserProfile(name, image_url);
+      console.log(result);
+
+      // await saveUser({...result?.user, displayName: name, photoURL: image_url})
+      navigate("/");
+      toast.success("Signup Successful");
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.message);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center md:min-h-screen mt-4 bg-gray-100 px-3">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
+      <div className="bg-white p-8 rounded-lg w-full max-w-4xl">
         <h2 className="text-2xl font-bold text-center text-text">Register</h2>
 
-        <form className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form
+          onSubmit={handleSubmit}
+          className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           <div className="mb-2">
             <label className="block text-text">Name</label>
             <input
               type="text"
+              name="name"
               placeholder="Enter your name"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -26,6 +70,7 @@ export default function Register() {
             <label className="block text-text">Email</label>
             <input
               type="email"
+              name="email"
               placeholder="Enter your email"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -34,8 +79,7 @@ export default function Register() {
           <div className="mb-2">
             <label className="block text-text">Role</label>
             <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
+              name="role"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="donor">Donor</option>
@@ -47,6 +91,7 @@ export default function Register() {
             <label className="block text-text">Upload Image</label>
             <input
               type="file"
+              name="image"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
@@ -55,6 +100,7 @@ export default function Register() {
             <label className="block text-text">Password</label>
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
               placeholder="Enter your password"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -87,7 +133,10 @@ export default function Register() {
 
         <p className="mt-4 text-center text-gray-600">
           Already have an account?{" "}
-          <Link to="/login" className="text-primary font-semibold hover:underline">
+          <Link
+            to="/login"
+            className="text-primary font-semibold hover:underline"
+          >
             Login
           </Link>
         </p>

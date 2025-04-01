@@ -7,6 +7,7 @@ import Contacts from "../Pages/Contacts/Contacts";
 import Donate from "../Pages/Donate/Donate";
 import Login from "../Auth/Login/Login";
 import Register from "../Auth/Register/Register";
+import Dashboard from "../Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -47,4 +48,8 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:'/dashboard',
+    element:<Dashboard/>
+  }
 ]);
