@@ -14,10 +14,11 @@ export const uploadImage = async (image) => {
   return data.data.display_url;
 };
 
-// export const saveUser = async (user) => {
-//   await axios.post(`${import.meta.env.VITE_API_URL}/user/${user.email}`, {
-//     name: user?.displayName,
-//     image: user?.photoURL,
-//     email: user?.email,
-//   });
-// };
+export const saveUser = async (user) => {
+  await axios.post(`${import.meta.env.VITE_API_URL}/user/${user.email}`, {
+    name: user?.displayName,
+    image: user?.photoURL,
+    email: user?.email,
+    role: user?.role
+  });
+};

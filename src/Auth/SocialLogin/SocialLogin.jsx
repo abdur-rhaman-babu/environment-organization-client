@@ -2,13 +2,15 @@ import { FaGoogle } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { saveUser } from "../../api/utils";
 
 const SocialLogin = () => {
   const { signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const hangleGoogleLogin = () => {
     signInWithGoogle()
-      .then(() => {
+      .then(async (result)  => {
+        await saveUser({...result?.user, role:'donor'})
         toast.success("SignIn Successfull");
         navigate("/");
       })

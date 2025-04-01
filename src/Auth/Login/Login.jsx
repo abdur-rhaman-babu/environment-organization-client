@@ -69,10 +69,6 @@ const Login = () => {
 
         <div className="mt-4 text-center">
           <p className="text-gray-600">Or login with</p>
-          {/* <button className="mt-2 w-full flex items-center justify-center gap-5 border py-2 rounded-lg hover:bg-gray-200 transition">
-            <FaGoogle />
-            <p>Continue with Google</p>
-          </button> */}
           <SocialLogin/>
         </div>
 

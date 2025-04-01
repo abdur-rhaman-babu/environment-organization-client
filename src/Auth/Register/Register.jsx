@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
-import { uploadImage } from "../../api/utils";
+import { saveUser, uploadImage,  } from "../../api/utils";
 import toast from "react-hot-toast";
 import useAuth from './../../Hooks/useAuth';
 
@@ -22,25 +22,17 @@ export default function Register() {
 
     const image_url = await uploadImage(image)
 
-    const formData = {
-      name,
-      email,
-      role,
-      password,
-      image_url
-    };
-    console.log(formData)
     try {
       //2. User Registration
       const result = await createUser(email, password);
 
       //3. Save username & profile photo
       await updateUserProfile(name, image_url);
-      console.log(result);
+      // console.log(result);
 
-      // await saveUser({...result?.user, displayName: name, photoURL: image_url})
+      await saveUser({...result?.user, displayName: name, photoURL: image_url, role})
       navigate("/");
-      toast.success("Signup Successful");
+      toast.success("Signup Successfully Done");
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
